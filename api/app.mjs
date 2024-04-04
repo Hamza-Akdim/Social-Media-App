@@ -1,37 +1,38 @@
 import express from "express";
+import logger from "./middlewares/logger.mjs"
+import { errorHandler, notFound } from "./middlewares/errors.mjs";
+import 'dotenv/config';
+import connectToDB from "./config/db.mjs";
 import bodyParser from "body-parser";
-import mongoose from "mongoose";
 import userRouter from "./routers/user-routes.mjs";
+import helmet from "helmet";
+import cors from "cors";
 
+
+// connection to DB
+connectToDB();
+
+// Init App
 const app = express();
-const PORT = process.env.PORT || 5003;
 
+// Apply middlewares
+app.use(express.json());
+app.use(logger); // To see the URL, req methode/protocol in console
 app.use(bodyParser.json());
 
+// helmet
+app.use(helmet())
+
+// cors policy
+app.use(cors())
+
+// route
 app.use("/api/users", userRouter);
 
-app.get("/", (req, res, next) => {
-  res.send("yassine-bg-2002");
-});
+// Error handler middlewares
+app.use(notFound);
+app.use(errorHandler);
 
-app.use((req, res, next) => {
-  const error = new Error("Could not find page");
-  error.status = 404;
-  next(error);
-});
-
-app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  res.json({ message: error.message });
-});
-
-mongoose
-  .connect("mongodb://localhost:27017/proji_fidirateur")
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error("MongoDB connection error:", err);
-  });
+// create server
+const PORT = process.env.PORT || 8000 ;
+app.listen(PORT, () => console.log(`server is running in ${process.env.NODE_ENV} mode on port ${PORT}`));
