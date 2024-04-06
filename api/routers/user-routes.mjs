@@ -1,11 +1,15 @@
 import express from "express";
 import { getUsers, login, signup } from "../controllers/users-controller.mjs";
 import { check } from "express-validator";
+import { verifyTokenAndAdmin } from "../middlewares/verifyToken.mjs";
 
 const userRouter = express.Router();
 
-userRouter.get("/", getUsers);
 
+// /api/users/
+userRouter.get("/", verifyTokenAndAdmin ,getUsers);
+
+// /api/users/register
 userRouter.post(
   "/register",
   [
@@ -14,6 +18,8 @@ userRouter.post(
   ],
   signup
 );
+
+// /api/users/login
 userRouter.post("/login", login);
 
 export default userRouter;

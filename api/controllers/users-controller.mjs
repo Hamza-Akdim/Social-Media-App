@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator";
 import { HttpError } from "../models/http-error.mjs";
-import { User } from "../models/user.mjs";
+import { User } from "../models/User.mjs";
 
 const getUsers = async (req, res, next) => {
   try {

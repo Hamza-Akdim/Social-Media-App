@@ -3,8 +3,21 @@ import uniqueValidator from "mongoose-unique-validator";
 import { Schema } from "mongoose";
 
 const userSchema = new Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true, minlength: 6 },
+  email: 
+  { 
+    type: String, 
+    required: true, 
+    unique: true 
+  },
+  password: 
+  { 
+    type: String, 
+    required: true, 
+    minlength: 6 
+  },
+},
+{
+  timestamps : true,
 });
 
 userSchema.plugin(uniqueValidator);
