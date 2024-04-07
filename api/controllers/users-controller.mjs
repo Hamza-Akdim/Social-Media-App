@@ -1,64 +1,92 @@
-import { validationResult } from "express-validator";
-import { HttpError } from "../models/http-error.mjs";
-import { User } from "../models/User.mjs";
+import asyncHandler from "express-async-handler";
+import bcrypt from "bcryptjs";
+import { User, validateUpdateUser } from "../models/User.mjs";
 
-const getUsers = async (req, res, next) => {
-  try {
-    const users = await User.find({}, "-password");
-    res.json({ users: users.map((user) => user.toObject({ getters: true })) });
-  } catch (err) {
-    const error = new HttpError(
-      "Fetching users failed, please try again later.",
-      500
-    );
-    next(error);
+
+/** 
+ * @desc    Update User
+ * @route   /api/users/:id
+ * @method  PUT
+ * @access  Private
+ */
+const updateUserByID = asyncHandler( async (req,res) => {
+  const user = await User.findById(req.params.id)
+  if (!user){
+    res.status(404).json({message : "user Not Found"})
+  } 
+
+  const {error} = validateUpdateUser(req.body);
+  if (error){
+      res.status(400).json({message : error.details[0].message});
   }
-};
 
-const signup = async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return next(
-      new HttpError("Invalid inputs passed, please check your data.", 422)
-    );
+  if (req.body.password){
+      const salt = await bcrypt.genSalt(10);
+      req.body.password = await bcrypt.hash( req.body.password, salt );
   }
-  const { email, password } = req.body;
 
-  try {
-    let existUser = await User.findOne({ email: email });
-    if (existUser) {
-      throw new HttpError("User exists already, please login instead.", 422);
-    }
+  const updateUser = await User.findByIdAndUpdate(req.params.id, {
+      $set : {
+          email : req.body.email,
+          password : req.body.password,
+          lastName : req.body.lastName,
+          firstName : req.body.firstName,
+          dateOfBirth : req.body.dateOfBirth,
+          bioContent : req.body.bioContent,
+          location : req.body.location,
+          occupation : req.body.occupation,
+      }
+  },{new : true}).select("-password")
+  res.status(200).json(updateUser);
+  } 
+)
 
-    const createdUser = new User({
-      email,
-      password,
-    });
-    await createdUser.save();
-    res.status(201).json(createdUser);
-  } catch (err) {
-    console.log("signup err", err);
-    const error = new HttpError("Signing up failed, please try again.", 500);
-    return next(error);
+/** 
+ * @desc    Get all Users
+ * @route   /api/users
+ * @method  GET
+ * @access  Private (only admin)
+ */
+const getAllUsers = asyncHandler( async (req,res) => {
+  const users = await User.find().select("-password")
+  res.status(200).json(users);
   }
-};
+)
 
-const login = async (req, res, next) => {
-  const { email, password } = req.body;
+/** 
+ * @desc    Get Users by id
+ * @route   /api/users/:id
+ * @method  GET
+ * @access  Private (only admin & user himself)
+ */
+const getUserByID = asyncHandler( async (req,res) => {
+  const user = await User.findById(req.params.id).select("-password")
+  if (user){
+      res.status(200).json(user)
+  } else (
+      res.status(404).json({message : "user Not Found"})
+  )
+} )
 
-  try {
-    const existingUser = await User.findOne({ email: email });
-    if (!existingUser || existingUser.password !== password) {
-      throw new HttpError("Invalid credentials, could not log you in.", 401);
-    }
-    res.json({ message: "Logged in!" });
-  } catch (err) {
-    const error = new HttpError(
-      "Logging in failed, please try again later.",
-      500
-    );
-    next(error);
-  }
-};
+/** 
+ * @desc    Delete Users by id
+ * @route   /api/users/:id
+ * @method  Delete
+ * @access  Private (only admin & user himself)
+ */
+const deleteUserByID = asyncHandler( async (req,res) => {
+  const user = await User.findById(req.params.id).select("-password")
+  if (user){
+      await User.findByIdAndDelete(req.params.id)
+      res.status(200).json({message:"User has been Deleted"})
+  } else (
+      res.status(404).json({message : "user Not Found"})
+  )
+} )
 
-export { getUsers, login, signup };
+export { 
+  updateUserByID, 
+  getAllUsers, 
+  getUserByID, 
+  deleteUserByID
+}

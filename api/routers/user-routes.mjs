@@ -1,25 +1,18 @@
 import express from "express";
-import { getUsers, login, signup } from "../controllers/users-controller.mjs";
-import { check } from "express-validator";
-import { verifyTokenAndAdmin } from "../middlewares/verifyToken.mjs";
+import { deleteUserByID, getAllUsers, getUserByID, updateUserByID} from "../controllers/users-controller.mjs" ;
+import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from "../middlewares/verifyToken.mjs";
 
-const userRouter = express.Router();
+const router = express.Router();
 
 
 // /api/users/
-userRouter.get("/", verifyTokenAndAdmin ,getUsers);
+router.get("/", verifyTokenAndAdmin ,getAllUsers);
 
-// /api/users/register
-userRouter.post(
-  "/register",
-  [
-    check("email").normalizeEmail().isEmail(),
-    check("password").isLength({ min: 6 }),
-  ],
-  signup
-);
+// /api/users/:id
+router.route("/:id")
+        .put(verifyTokenAndAuthorization, updateUserByID)
+        .get(verifyTokenAndAuthorization, getUserByID)
+        .delete(verifyTokenAndAuthorization, deleteUserByID)
 
-// /api/users/login
-userRouter.post("/login", login);
 
-export default userRouter;
+export default router;

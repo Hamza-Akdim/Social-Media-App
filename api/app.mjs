@@ -4,10 +4,12 @@ import { errorHandler, notFound } from "./middlewares/errors.mjs";
 import 'dotenv/config';
 import connectToDB from "./config/db.mjs";
 import bodyParser from "body-parser";
-import userRouter from "./routers/user-routes.mjs";
 import helmet from "helmet";
 import cors from "cors";
 
+// routes Path
+import userRoutes from "./routers/user-routes.mjs";
+import authRoutes from "./routers/authentication-routes.mjs";
 
 // connection to DB
 connectToDB();
@@ -27,7 +29,8 @@ app.use(helmet())
 app.use(cors())
 
 // route
-app.use("/api/users", userRouter);
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 // Error handler middlewares
 app.use(notFound);
