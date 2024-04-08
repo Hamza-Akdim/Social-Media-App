@@ -35,6 +35,17 @@ const userSchema = new mongoose.Schema({
     trim : true ,
     minlength: 6 
   },
+  picturePath: {
+    type: String,
+    default: "",
+  },
+  friends : {
+    type : [{
+      type : mongoose.Schema.Types.ObjectId,
+      ref : 'User',
+    }],
+    default : [],
+  } ,
   dateOfBirth : {
     type : String,
     required : true,
@@ -76,6 +87,8 @@ function validateRegisterUser(obj){
       firstName : Joi.string().trim().required().min(2).max(200),
       lastName : Joi.string().trim().required().min(2).max(200),
       password : passwordComplexity().required(),
+      picturePath : Joi.string().default(""),
+      friends : Joi.array().default([]),
       isAdmin: Joi.boolean().default(false),
       dateOfBirth : Joi.string().required(),
       bioContent : Joi.string().default(""),
@@ -84,7 +97,6 @@ function validateRegisterUser(obj){
   });
   return schema.validate(obj);
 }
-
 // Validation Login User
 function validateLoginUser(obj){
   const schema = Joi.object({
@@ -101,6 +113,8 @@ function validateUpdateUser(obj){
     firstName : Joi.string().trim().min(2).max(200),
     lastName : Joi.string().trim().min(2).max(200),
     password : passwordComplexity,
+    picturePath : Joi.string().default(""),
+    friends : Joi.array().default([]),
     dateOfBirth : Joi.date(),
     bioContent : Joi.string().default(""),
     location : Joi.string().default(""),
