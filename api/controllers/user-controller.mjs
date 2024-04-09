@@ -25,7 +25,7 @@ const updateUserByID = asyncHandler( async (req,res) => {
       const salt = await bcrypt.genSalt(10);
       req.body.password = await bcrypt.hash( req.body.password, salt );
   }
-  const imgPath = req.file ? req.file.path : null;
+  const imgPath = req.file ? req.file.path : "";
   const updateUser = await User.findByIdAndUpdate(req.params.id, {
       $set : {
           email : req.body.email,
@@ -63,7 +63,7 @@ const getAllUsers = asyncHandler( async (req,res) => {
  * @access  Private (only admin & user himself)
  */
 const getUserByID = asyncHandler( async (req,res) => {
-  const user = await User.findById(req.params.id).select("-password").populate("friends",["_id" ,"email"])
+  const user = await User.findById(req.params.id).select("-password").populate("friends",["_id" ,"firstName" ,"lastName","email"])
   if (user){
       res.status(200).json(user)
   } else (
@@ -120,13 +120,13 @@ const addRemoveFriend = asyncHandler( async (req,res) => {
       friend.friends = friend.friends.filter((id) => id !== user._id.toString());
       await user.save();
       await friend.save();
-      res.status(200).json({message : `${friend.firstName} has been removed from your frind list`})
+      res.status(200).json({message : `${friend.firstName} ${friend.lastName} has been removed from your frind list`})
     } else {
       user.friends.push(friendObjectId);
       friend.friends.push(user._id);
       await user.save();
       await friend.save();
-      res.status(200).json({message : `${friend.firstName} has been adedd to your frind list`})
+      res.status(200).json({message : `${friend.firstName} ${friend.lastName} has been adedd to your frind list`})
     }
 
   } else (

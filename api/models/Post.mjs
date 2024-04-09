@@ -10,23 +10,18 @@ const PostSchema = new mongoose.Schema({
 		ref : User,  // model reference
         required : true,
     },
-    firstName : {
-        type : String,
-        required : true,
-        trim : true ,
-        minlength : 2,
-        maxlength : 200,
-    },
-    lastName : {
-        type : String,
-        required : true,
-        trim : true ,
-        minlength : 2,
-        maxlength : 200,
-    },
     description : {
         type : String,
         default : ""
+    },
+    picturePath : {
+        type : String,
+        default : ""
+    },
+    likes: {
+        type: Map,
+        of: Boolean,
+        default : {}
     },
 },
 {
@@ -34,19 +29,30 @@ const PostSchema = new mongoose.Schema({
 })
 
 // Create Post Model
-const User =  mongoose.model("User",PostSchema);
+const Post =  mongoose.model("Post",PostSchema);
 
 // Validation Add Post
-function addPost(obj){
+function addPostValidation(obj){
     const schema = Joi.object({
-        firstName : Joi.string().trim().required().min(2).max(200),
-        lastName : Joi.string().trim().required().min(2).max(200),
+        userId : Joi.required(),
         description : Joi.string().required(),
+        picturePath :Joi.string().default(""),
+        likes: Joi.object().pattern(Joi.string(), Joi.boolean()).default({})
+    });
+    return schema.validate(obj);
+}
+
+// Validation Update Post
+function updatePostValidation(obj){
+    const schema = Joi.object({
+        description : Joi.string(),
+        picturePath :Joi.string().default(""),
     });
     return schema.validate(obj);
 }
 
 export {
-    addPost,
-
+    addPostValidation,
+    updatePostValidation,
+    Post
 }

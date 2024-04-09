@@ -23,7 +23,7 @@ const register = asyncHandler( async (req,res) => {
     // password = "amine123" => password = "eafuhouh"
     req.body.password = await bcrypt.hash( req.body.password, salt );
 
-    const imgPath = req.file ? req.file.path : null;
+    const imgPath = req.file ? req.file.path : "";
     user = new User ({
         email : req.body.email,
         password : req.body.password,

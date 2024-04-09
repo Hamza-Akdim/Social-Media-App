@@ -10,6 +10,7 @@ import cors from "cors";
 // routes Path
 import userRoutes from "./routers/user-routes.mjs";
 import authRoutes from "./routers/authentication-routes.mjs";
+import postsRoutes from "./routers/post-routes.mjs"
 
 // connection to DB
 connectToDB();
@@ -31,6 +32,7 @@ app.use(cors())
 // route
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/posts", postsRoutes);
 
 // Error handler middlewares
 app.use(notFound);
