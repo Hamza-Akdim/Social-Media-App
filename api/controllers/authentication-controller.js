@@ -75,10 +75,10 @@ const login = asyncHandler(async (req, res) => {
   const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY);
   res.cookie("token", token, { expire: new Date(Date.now() + 8000000) });
 
-  const { _id, firstName, lastName, email, role } = user;
+  const { _id, firstName, lastName, email} = user;
   return res.json({
     token: token,
-    user: { _id, firstName, lastName, email, role },
+    user: { _id, firstName, lastName, email},
   });
 });
 
