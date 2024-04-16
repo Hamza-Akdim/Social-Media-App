@@ -9,7 +9,7 @@ const errorHandler = (err,req,res,next) => {
     res.status(statusCode).json({message : err.message});
 }
 
-export{
+module.exports = {
     errorHandler,
     notFound
 }

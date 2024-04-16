@@ -1,7 +1,6 @@
-import asyncHandler from "express-async-handler";
-import {User, validateLoginUser, validateRegisterUser} from "../models/User.mjs";
-import bcrypt from "bcryptjs";
-
+const asyncHandler = require("express-async-handler");
+const {User, validateLoginUser, validateRegisterUser} = require("../models/user.js")
+const bcrypt = require("bcryptjs");
 
 /** 
  * @desc    Register new User
@@ -71,7 +70,7 @@ const login = asyncHandler( async (req,res) => {
     }
 )
 
-export {
+module.exports =  {
     register,
     login,
 }

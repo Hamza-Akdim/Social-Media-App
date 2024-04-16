@@ -1,8 +1,8 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import { verifyTokenAndAuthorization } from "../middlewares/verifyToken.mjs";
-import upload from "./uploadImages.mjs";
-import { addPost, deletePostByPostId, getFeedPosts, getUserPosts, likePost, updatePostByPostId } from "../controllers/post-controller.mjs";
+const { verifyTokenAndAuthorization } = require("../middlewares/verifyToken.js");
+const upload = require("./uploadImages.js");
+const { addPost, deletePostByPostId, getFeedPosts, getUserPosts, likePost, updatePostByPostId } = require("../controllers/post-controller.js");
 
 
 // /api/posts/
@@ -24,4 +24,4 @@ router.route("/:postId")
         .delete(verifyTokenAndAuthorization, deletePostByPostId)
         .put(verifyTokenAndAuthorization, updatePostByPostId)
 
-export default router;
+module.exports = router;

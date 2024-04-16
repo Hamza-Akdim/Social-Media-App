@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import Joi from "joi";
-import { User } from "./User.mjs";
+const mongoose = require("mongoose");
+const Joi = require("joi");
+const { User } = require("./user.js");
 
 
 // Create Post Schema
@@ -51,7 +51,7 @@ function updatePostValidation(obj){
     return schema.validate(obj);
 }
 
-export {
+module.exports = {
     addPostValidation,
     updatePostValidation,
     Post

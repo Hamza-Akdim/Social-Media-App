@@ -1,16 +1,17 @@
-import express from "express";
-import logger from "./middlewares/logger.mjs"
-import { errorHandler, notFound } from "./middlewares/errors.mjs";
-import 'dotenv/config';
-import connectToDB from "./config/db.mjs";
-import bodyParser from "body-parser";
-import helmet from "helmet";
-import cors from "cors";
+const express = require("express");
+const logger = require("./middlewares/logger.js");
+const { errorHandler, notFound } = require("./middlewares/errors.js");
+const dotenv = require("dotenv");
+dotenv.config();
+const connectToDB = require("./config/db.js");
+const bodyParser = require("body-parser");
+const helmet = require("helmet");
+const cors = require("cors");
 
 // routes Path
-import userRoutes from "./routers/user-routes.mjs";
-import authRoutes from "./routers/authentication-routes.mjs";
-import postsRoutes from "./routers/post-routes.mjs"
+const userRoutes = require("./routers/user-routes.js");
+const authRoutes = require("./routers/authentication-routes.js");
+const postsRoutes = require("./routers/post-routes.js");
 
 // connection to DB
 connectToDB();

@@ -1,7 +1,7 @@
-import asyncHandler from "express-async-handler";
-import {addPostValidation, Post, updatePostValidation} from "../models/Post.mjs"
-import mongoose from "mongoose";
-import { User } from "../models/User.mjs";
+const asyncHandler = require("express-async-handler");
+const {addPostValidation, Post, updatePostValidation} = require("../models/Post.js"); 
+const { User } = require("../models/user.js");
+const mongoose = require("mongoose");
 
 
 /** 
@@ -140,7 +140,7 @@ const updatePostByPostId = asyncHandler( async (req,res) => {
     } 
 )
 
-export {
+module.exports = {
     addPost,
     getFeedPosts,
     getUserPosts,

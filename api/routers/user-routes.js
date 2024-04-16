@@ -1,7 +1,7 @@
-import express from "express";
-import { addRemoveFriend, deleteUserByID, getAllUsers, getUserByID, getUserFriendsByID, updateUserByID} from "../controllers/user-controller.mjs" ;
-import { verifyToken, verifyTokenAndAdmin, verifyTokenAndAuthorization } from "../middlewares/verifyToken.mjs";
-import upload from "./uploadImages.mjs";
+const express = require("express");
+const { addRemoveFriend, deleteUserByID, getAllUsers, getUserByID, getUserFriendsByID, updateUserByID} = require("../controllers/user-controller.js" );
+const { verifyToken, verifyTokenAndAdmin, verifyTokenAndAuthorization } = require("../middlewares/verifyToken.js");
+const upload = require("./uploadImages.js");
 
 const router = express.Router();
 
@@ -21,4 +21,5 @@ router.get("/:id/friends", verifyTokenAndAuthorization, getUserFriendsByID)
 // /api/users/:id/friendId
 router.post("/:id/:friendId", verifyTokenAndAuthorization, addRemoveFriend)
 
-export default router;
+module.exports = router;
+

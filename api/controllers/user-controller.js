@@ -1,7 +1,7 @@
-import asyncHandler from "express-async-handler";
-import bcrypt from "bcryptjs";
-import { User, validateUpdateUser } from "../models/User.mjs";
-import mongoose from "mongoose";
+const asyncHandler = require("express-async-handler");
+const bcrypt = require("bcryptjs");
+const { User, validateUpdateUser } = require("../models/user.js");
+const mongoose = require("mongoose");
 
 
 /** 
@@ -135,7 +135,7 @@ const addRemoveFriend = asyncHandler( async (req,res) => {
 
 })
 
-export { 
+module.exports = { 
   updateUserByID, 
   getAllUsers, 
   getUserByID, 

@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 
 // Verify Token
 function verifyToken(req,res,next){
@@ -38,7 +38,7 @@ function verifyTokenAndAdmin(req,res,next){
     });
 }
 
-export {
+module.exports = {
     verifyToken,
     verifyTokenAndAuthorization,
     verifyTokenAndAdmin

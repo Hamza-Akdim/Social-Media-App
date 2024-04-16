@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
-import Joi from "joi";
-import jwt from "jsonwebtoken";
-import passwordComplexity from "joi-password-complexity";
+const mongoose = require("mongoose");
+const Joi = require("joi");
+const jwt = require("jsonwebtoken");
+const passwordComplexity = require("joi-password-complexity");
 
 // Create User Schema
 const userSchema = new mongoose.Schema({
@@ -131,7 +131,7 @@ function validateUpdatePassword(obj){
   return schema.validate(obj);
 }
 
-export {
+module.exports = {
   User,
   validateLoginUser,
   validateRegisterUser,
