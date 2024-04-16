@@ -2,7 +2,7 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/app.js"
@@ -17,6 +17,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.18.3",
     "express-async-handler": "^1.2.0",
+    "express-jwt": "^8.4.1",
     "express-validator": "^7.0.1",
     "helmet": "^7.1.0",
     "joi": "^17.12.3",

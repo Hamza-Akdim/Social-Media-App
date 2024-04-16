@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
-const jwt = require("jsonwebtoken");
 const passwordComplexity = require("joi-password-complexity");
+require("dotenv").config();
+
 
 // Create User Schema
 const userSchema = new mongoose.Schema({
@@ -71,12 +72,6 @@ const userSchema = new mongoose.Schema({
   timestamps : true,
 });
 
-// Generate Token 
-function generateToken(){
-  return jwt.sign({ id:this._id, isAdmin:this.isAdmin}, process.env.JWT_SECRET_KEY, {expiresIn:"2h"});
-};
-userSchema.methods.generateToken = generateToken;
-
 // Create User Model
 const User =  mongoose.model("User",userSchema);
 
@@ -137,5 +132,4 @@ module.exports = {
   validateRegisterUser,
   validateUpdateUser,
   validateUpdatePassword,
-  generateToken
 }

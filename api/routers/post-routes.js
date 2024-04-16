@@ -1,27 +1,27 @@
 const express = require("express");
 const router = express.Router();
-const { verifyTokenAndAuthorization } = require("../middlewares/verifyToken.js");
+const { verifyToken, authorization } = require("../middlewares/verifyToken.js");
 const upload = require("./uploadImages.js");
 const { addPost, deletePostByPostId, getFeedPosts, getUserPosts, likePost, updatePostByPostId } = require("../controllers/post-controller.js");
 
 
 // /api/posts/
-router.route("/")
-        .post(upload.single('image'), verifyTokenAndAuthorization, addPost)
-        .get(getFeedPosts)
+router
+  .route("/")
+  .post(upload.single("image"), verifyToken, authorization, addPost)
+  .get(getFeedPosts);
 
 
 // /api/posts/:userId
-router.route("/:userId")
-        .get(verifyTokenAndAuthorization, getUserPosts)
+router.route("/:userId").get(verifyToken, authorization, getUserPosts);
 
 // /api/posts/:postId/:userId
-router.route("/:postId/:userId")
-        .patch(verifyTokenAndAuthorization, likePost)
+router.route("/:postId/:userId").patch(verifyToken, authorization, likePost);
 
 // /api/posts/:postId
-router.route("/:postId")
-        .delete(verifyTokenAndAuthorization, deletePostByPostId)
-        .put(verifyTokenAndAuthorization, updatePostByPostId)
+router
+  .route("/:postId")
+  .delete(verifyToken, authorization, deletePostByPostId)
+  .put(verifyToken, authorization, updatePostByPostId);
 
 module.exports = router;
