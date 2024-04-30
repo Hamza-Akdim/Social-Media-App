@@ -72,7 +72,7 @@ const login = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "invalidPassword" });
   }
 
-  const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY);
+  const token = jwt.sign({ _id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET_KEY);
   res.cookie("token", token, { expire: new Date(Date.now() + 8000000) });
 
   const { _id, firstName, lastName, email} = user;

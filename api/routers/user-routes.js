@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 // /api/users/
-router.get("/", verifyToken, isAdmin, getAllUsers);
+router.get("/", verifyToken, authorization, isAdmin, getAllUsers);
 
 // /api/users/:id
 router
