@@ -1,9 +1,18 @@
+"use client";
 import React from "react";
 import { IoLogOutOutline } from "react-icons/io5";
+import { useAuthContext } from "../context/authContext";
+import { useRouter } from "next/navigation";
 
 const Profile = () => {
+  const { logout } = useAuthContext();
+  const router = useRouter();
+  const handleLogout = () => {
+    logout();
+    router.push("/signin");
+  };
   return (
-    <div className="ml-3 mt-1.5 border-2 rounded-semilg">
+    <div className="ml-3 mt-1.5 border-2 rounded-semilg sticky top-6">
       <div className="bg-silver p-2 mx-1.25 mt-1.25 rounded-semilg">
         <div className="flex flex-row">
           <img src="/gilfoyl.png" alt="" className="w-1.25 rounded-lg" />
@@ -33,10 +42,10 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="flex pl-4 my-1">
+      <button className="flex pl-4 my-1" onClick={handleLogout}>
         <IoLogOutOutline size={25} />
         <p>Logout</p>
-      </div>
+      </button>
     </div>
   );
 };

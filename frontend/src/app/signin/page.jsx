@@ -1,15 +1,18 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useAuthContext } from "../context/authContext";
 import Image from "next/image";
 
 const page = () => {
+  const { login } = useAuthContext();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost:4001/api/users/login", {
+      const response = await fetch("http://localhost:4001/api/auth/login", {
         method: "POST",
         body: JSON.stringify({ email, password }),
         headers: {
@@ -18,13 +21,14 @@ const page = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        localStorage.setItem("token", data.token);
-        router.push("/home");
+        login(data.user._id);
+        router.push("/accueil");
       } else {
-        throw new Error(data.message);
+        setError(data.error);
       }
     } catch (err) {
-      console.log("Login failed", err);
+      console.error("Login error:", err);
+      setError("An error occurred while logging in.");
     }
   };
 
@@ -62,6 +66,7 @@ const page = () => {
           >
             SUBMIT
           </button>
+          {error && <p>{error}</p>}
         </div>
       </div>
     </div>

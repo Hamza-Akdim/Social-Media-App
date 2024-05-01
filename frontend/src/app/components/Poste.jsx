@@ -3,9 +3,9 @@ import { BiSolidLike } from "react-icons/bi";
 import { BiSolidCommentDetail } from "react-icons/bi";
 import { FaShare } from "react-icons/fa";
 
-const Poste = ({ name, caption, profilePic, src, likes, comments, share }) => {
+const Poste = ({ name, caption, profilePic, src, likes }) => {
   return (
-    <div className="flex flex-col border-2 rounded-semilg">
+    <div className="flex flex-col border-2 rounded-semilg mb-1.5">
       <div className="flex flex-row pt-2 pl-2">
         <img src={profilePic} alt="" className="w-1.25 rounded-lg mr-1.25" />
         <h6 className="text-base font-semibold">{name}</h6>
@@ -23,11 +23,11 @@ const Poste = ({ name, caption, profilePic, src, likes, comments, share }) => {
         </div>
         <div className="flex flex-row">
           <BiSolidCommentDetail size={20} />
-          <p>{comments}comments</p>
+          <p>0 comments</p>
         </div>
         <div className="flex">
           <FaShare size={20} />
-          <p>{share}share</p>
+          <p>0 share</p>
         </div>
       </div>
       <div className="flex flex-row pl-2  mb-1.5">

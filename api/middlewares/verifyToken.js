@@ -10,7 +10,7 @@ exports.verifyToken = jwt({
 
 // Verify Token & Authorize user
 exports.authorization = (req, res, next) => {
-  if (req.params.id === req.auth._id || req.auth.isAdmin) {
+  if (req.params.id === req.auth.id || req.auth.isAdmin) {
     next();
   } else {
     return res.status(403).json({

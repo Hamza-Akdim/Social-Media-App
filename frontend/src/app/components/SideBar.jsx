@@ -6,9 +6,9 @@ import { LuMessagesSquare } from "react-icons/lu";
 import { CgGames } from "react-icons/cg";
 import { IoLogOutSharp } from "react-icons/io5";
 
-const sideBar = () => {
+const SideBar = () => {
   return (
-    <div className="mt-2 ml-2 border-2 flex flex-col gap-4 max-w-2 items-center rounded-semilg sticky">
+    <div className="mt-2 ml-2 border-2 flex flex-col gap-4 max-w-2 items-center rounded-semilg sticky top-0">
       <div className="pl-1.5 border-b-2 w-full">
         <IoMdMenu size={35} />
       </div>
@@ -26,4 +26,4 @@ const sideBar = () => {
   );
 };
 
-export default sideBar;
+export default SideBar;
