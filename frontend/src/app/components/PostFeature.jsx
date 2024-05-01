@@ -5,41 +5,27 @@ import { CiImageOn } from "react-icons/ci";
 import { useAuthContext } from "../context/authContext";
 
 const PostFeature = () => {
-  const { userId } = useAuthContext();
+  const { userId, token } = useAuthContext();
   const [image, selectedImage] = useState(null);
   const [description, setDescription] = useState("");
-  const [token, setToken] = useState(null);
-  const loadToken = () => {
-    const storedToken = localStorage.getItem("token");
-    setToken(storedToken);
-  };
-  useEffect(() => {
-    loadToken();
-  }, []);
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     selectedImage(file);
   };
   const handlePost = async () => {
     try {
-      if (!userId || !token) {
-        console.error("userId is not defined or invalid or token machi valid");
-        return;
-      }
-
       const formData = new FormData();
-      formData.append("image", image);
+      formData.append("picturePath", image);
       formData.append("description", description);
       formData.append("userId", userId);
-
+      
       console.log("userId:", userId);
-
+      console.log("token:", token);
       const response = await fetch("http://localhost:4001/api/posts/", {
         method: "POST",
         body: formData,
         headers: {
           Authorization: `Bearer ${token}`,
-          token: token,
         },
       });
 

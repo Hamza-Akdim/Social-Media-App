@@ -20,8 +20,9 @@ const page = () => {
         },
       });
       const data = await response.json();
+      console.log(data);
       if (response.ok) {
-        login(data.user._id);
+        login(data.user._id, data.token);
         router.push("/accueil");
       } else {
         setError(data.error);

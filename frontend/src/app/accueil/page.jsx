@@ -23,4 +23,4 @@ const page = () => {
   );
 };
 
-export default AuthGuard(page);
+export default page;
