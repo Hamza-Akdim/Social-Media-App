@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { FaFileVideo } from "react-icons/fa";
-import { IoAttach } from "react-icons/io5";
-import { CiImageOn } from "react-icons/ci";
 import { useAuthContext } from "../context/authContext";
 
 const PostFeature = () => {
@@ -39,25 +36,25 @@ const PostFeature = () => {
     }
   };
   return (
-    <div className="border-2 max-h-4 mt-2 rounded-semilg mb-1.5">
-      <div className="flex flex-row p-2 border-b-2">
-        <img src="/gilfoyl.png" alt="" className="w-1.25 rounded-lg" />
+    <div className="border-3 border-gray2 max-h-4 mt-2 rounded-mdd bg-white mb-1">
+      <div className="flex flex-row items-center p-2 border-b-2">
+        <img src="/gilfoyl.png"  alt="" className=" size-1 rounded-lg" />
         <input
           type="text"
           onChange={(e) => setDescription(e.target.value)}
           name=""
           id=""
-          className="bg-silver rounded-md pr-4 mx-1.25 px-4"
+          className="bg-silver rounded-mdd pr-4 mx-1.25 px-4 h-1"
           placeholder="whats on your mind?"
         />
         <button
           onClick={handlePost}
-          className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 rounded-md"
+          className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd"
         >
           Share
         </button>
       </div>
-      <div className="flex flex-row pl-2 pt-2">
+      <div className="flex flex-row p-2 pb-1.5 pt-1.5">
         <div className="flex flex-row mr-1.25">
           <label
             htmlFor="image-upload"
@@ -70,16 +67,16 @@ const PostFeature = () => {
               id="image-upload"
               className="hidden"
             />
-            <CiImageOn size={20} className="mr-1" />
+            <img src="/Image.png" width={20} height={20}className="mr-0.7" />
             <p>Image</p>
           </label>
         </div>
         <div className="flex flex-row mr-1.25">
-          <FaFileVideo size={20} />
+          <img src="/Video.png" width={20} height={20} className="mr-0.7"/>
           <p>video</p>
         </div>
         <div className="flex flex-row">
-          <IoAttach size={20} />
+          <img src="/File.png" width={20} height={20} className="mr-0.7"/>
           <p>attachement</p>
         </div>
       </div>

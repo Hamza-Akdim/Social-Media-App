@@ -34,36 +34,35 @@ const page = () => {
   };
 
   return (
-    <div className="">
-      <div className="flex justify-center items-center h-7 gap-3 bg-white w-xx ml-7 mt-4 rounded-lllg shadow-lg">
+    <div className="relative bg-cover bg-center h-screen flex   "  style={{backgroundImage: "url('zlijj.png')"}}>
+      <div className="flex justify-center items-center h-7 gap-3 bg-white border-gray2 border-3 w-xx ml-7 mt-4 rounded-llg shadow-lg">
         <div>
           <Image
-            src="/logo.png"
+            src="/AtlasNet.png"
             alt="Logo"
-            className="dark:invert "
-            width={200}
+            width={350}
             height={10}
             priority
           />
         </div>
-        <div className="flex flex-col gap-1 bg-white">
+        <div className="flex flex-col gap-0.5 bg-white  ">
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="enter your mail"
-            className=" border-2 border-brd rounded-lg p-1.5"
+            className=" border-2 border-brd hover:border-blue rounded-mdd p-1.5"
           />
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="enter your password"
-            className="border-2 border-brd rounded-lg p-1.5"
+            className="border-2 border-brd hover:border-blue rounded-mdd p-1.5"
           />
           <button
             onClick={handleLogin}
-            className="border-2 rounded-lg py-1.5 hover:border-black"
+            className="border-2 rounded-mdd py-1.5 mt-1.5 hover:border-darkBlue hover:bg-blue hover:text-white hover:font-bold gap-2"
           >
             SUBMIT
           </button>

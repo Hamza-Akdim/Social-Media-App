@@ -9,11 +9,13 @@ import LastColumn from "../components/LastColumn";
 
 const page = () => {
   return (
-    <div className="flex flex-row sticky">
-      <div className="w-4">
+    <div className="bg-cover bg-center bg-scroll bg-gray3 h-screen flex flex-row fixed w-screen"  style={{backgroundImage: "url('zlijj.png')"}}>
+      <div className="w-3 " >
         <SideBar />
       </div>
-      <SearchColumn />
+      <div  >
+        <SearchColumn />
+      </div>
       <Feed />
       <div>
         <LastColumn />
