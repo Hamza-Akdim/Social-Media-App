@@ -13,7 +13,7 @@ const Poste = ({ name, caption, profilePic, src, likes }) => {
         alt=""
         className="w-8 h-5 m-auto rounded-mdd border-b-2 mb-1.25"
       />
-      <div className="flex flex-row items-center justify-between  m-auto mb-1 bg-gray2 w-8">
+      <div className="flex flex-row items-center justify-between  m-auto mb-1 w-8">
         <div className="flex items-center">
           <img src="/Add.png" width={20} height={20} className="mr-1"/>
           <div>

@@ -11,7 +11,7 @@ const mongoose = require("mongoose");
  * @access  Public
  */
 const getFeedPosts = asyncHandler( async (req,res) => {
-    const posts = await Post.find().populate("userId",["_id" ,"lastName"])
+    const posts = await Post.find().populate("userId",["_id" ,"lastName"]).sort({ createdAt: -1 })
     res.status(200).json(posts);
     }
 )
