@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
+const fs = require('fs');
 require("dotenv").config();
 
 
@@ -36,9 +37,18 @@ const userSchema = new mongoose.Schema({
     trim : true ,
     minlength: 6 
   },
-  picturePath: {
-    type: String,
-    default: "",
+  // picturePath: {
+  //   type: String,
+  //   default: "",
+  // },
+  profilePicture: {
+    data: {
+      type : Buffer, // Binary data of the image
+    },
+    contentType: {
+      type : String,
+      default : "" ,
+    } // MIME type of the image (e.g., image/jpeg, image/png)
   },
   friends : {
     type : [{
@@ -75,6 +85,7 @@ const userSchema = new mongoose.Schema({
 // Create User Model
 const User =  mongoose.model("User",userSchema);
 
+
 // Validation register User
 function validateRegisterUser(obj){
   const schema = Joi.object({
@@ -82,7 +93,10 @@ function validateRegisterUser(obj){
       firstName : Joi.string().trim().required().min(2).max(200),
       lastName : Joi.string().trim().required().min(2).max(200),
       password : passwordComplexity().required(),
-      picturePath : Joi.string().default(""),
+      profilePicture : Joi.object({
+        data: Joi.binary(),
+        contentType: Joi.string().default(""),
+      }).optional().default(),
       friends : Joi.array().default([]),
       isAdmin: Joi.boolean().default(false),
       dateOfBirth : Joi.string().required(),
@@ -108,7 +122,10 @@ function validateUpdateUser(obj){
     firstName : Joi.string().trim().min(2).max(200),
     lastName : Joi.string().trim().min(2).max(200),
     password : passwordComplexity,
-    picturePath : Joi.string().default(""),
+    profilePicture : Joi.object({
+      data: Joi.binary(),
+      contentType: Joi.string().default(""),
+    }).optional().default(),
     friends : Joi.array().default([]),
     dateOfBirth : Joi.date(),
     bioContent : Joi.string().default(""),

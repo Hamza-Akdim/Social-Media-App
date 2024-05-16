@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const {addPostValidation, Post, updatePostValidation} = require("../models/Post.js"); 
 const { User } = require("../models/user.js");
 const mongoose = require("mongoose");
+const fs = require('fs');
 
 
 /** 
@@ -47,12 +48,31 @@ const addPost = asyncHandler( async (req,res) => {
     if (!user){
         return res.status(404).json({ message : "user not found"});
     }
+    if ( !req.file && !req.body.description ){
+        res.status(400).json({ message : " Post description or post image require!! " })
+    }
+    var Data, ContentType
 
-    const imgPath = req.file ? req.file.path : "";
+    if (req.file){
+        try {
+            Data = await fs.promises.readFile(req.file.path);
+            ContentType = req.file.mimetype;
+            req.file = req.file.path; 
+        } catch (err) {
+        console.error(err);
+        return res.status(500).send('Error reading image file');
+        }
+    } else {
+        Data = null;
+        ContentType = ""
+    }
     const post = new Post ({
         userId : req.body.userId,
         description : req.body.description,
-        picturePath : imgPath,
+        postPicture : { 
+            data : Data, 
+            contentType : ContentType,
+        },
         likes: {},
     });
     const result = await post.save();
@@ -129,11 +149,9 @@ const updatePostByPostId = asyncHandler( async (req,res) => {
     if (error){
         res.status(400).json({message : error.details[0].message});
     }
-    const imgPath = req.file ? req.file.path : "";
     const updatedPost = await Post.findByIdAndUpdate(req.params.postId, {
         $set : {
             description : req.body.description,
-            picturePath : imgPath,
         }
     },{new : true}).populate("userId",["_id" ,"lastName"])
     res.status(200).json(updatedPost);

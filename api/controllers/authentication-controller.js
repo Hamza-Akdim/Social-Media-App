@@ -6,7 +6,7 @@ const {
   validateRegisterUser,
 } = require("../models/user.js");
 const bcrypt = require("bcryptjs");
-
+const fs = require('fs');
 /**
  * @desc    Register new User
  * @route   /api/auth/register
@@ -27,13 +27,31 @@ const register = asyncHandler(async (req, res) => {
   // password = "amine123" => password = "eafuhouh"
   req.body.password = await bcrypt.hash(req.body.password, salt);
 
-  const imgPath = req.file ? req.file.path : "";
+  var Data, ContentType
+
+  if (req.file){
+    try {
+      Data = await fs.promises.readFile(req.file.path);
+      ContentType = req.file.mimetype;
+      req.file = req.file.path; 
+    } catch (err) {
+      console.error(err);
+      return res.status(500).send('Error reading image file');
+    }
+  } else {
+    Data = await fs.promises.readFile("./images/Avatar.png");
+    ContentType = ""
+  }
+
   user = new User({
     email: req.body.email,
     password: req.body.password,
     lastName: req.body.lastName,
     firstName: req.body.firstName,
-    picturePath: imgPath,
+    profilePicture : { 
+      data : Data, 
+      contentType : ContentType,
+    },
     friends: req.body.friends,
     dateOfBirth: req.body.dateOfBirth,
     bioContent: req.body.bioContent,
@@ -41,11 +59,10 @@ const register = asyncHandler(async (req, res) => {
     occupation: req.body.occupation,
   });
   const result = await user.save();
+  res.status(200).json(result);
   //   const token = user.generateToken();
   //   const { password, ...other } = result._doc;
-
   //   res.status(201).json({ ...other, token });
-  res.status(200).json(result);
 });
 
 /**

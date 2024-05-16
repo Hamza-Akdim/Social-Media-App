@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const { User, validateUpdateUser } = require("../models/user.js");
 const mongoose = require("mongoose");
+const fs = require('fs');
 
 
 /** 
@@ -25,14 +26,32 @@ const updateUserByID = asyncHandler( async (req,res) => {
       const salt = await bcrypt.genSalt(10);
       req.body.password = await bcrypt.hash( req.body.password, salt );
   }
-  const imgPath = req.file ? req.file.path : "";
+
+  var Data = user.profilePicture.data
+  var ContentType = user.profilePicture.contentType
+  
+  if (req.file){
+    var Data, ContentType;
+    try {
+      Data = await fs.promises.readFile(req.file.path);
+      ContentType = req.file.mimetype;
+      req.file = req.file.path; 
+    } catch (err) {
+      console.error(err);
+      return res.status(500).send('Error reading image file');
+    }
+  }
+
   const updateUser = await User.findByIdAndUpdate(req.params.id, {
       $set : {
           email : req.body.email,
           password : req.body.password,
           lastName : req.body.lastName,
           firstName : req.body.firstName,
-          picturePath : imgPath,
+          profilePicture : { 
+            data : Data, 
+            contentType : ContentType,
+          },
           friends : req.body.friends,
           dateOfBirth : req.body.dateOfBirth,
           bioContent : req.body.bioContent,

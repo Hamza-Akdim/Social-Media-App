@@ -14,9 +14,14 @@ const PostSchema = new mongoose.Schema({
         type : String,
         default : ""
     },
-    picturePath : {
-        type : String,
-        default : ""
+    postPicture: {
+        data: {
+            type : Buffer, // Binary data of the image
+        },
+        contentType: {
+            type : String,
+            default : "" ,
+        } // MIME type of the image (e.g., image/jpeg, image/png)
     },
     likes: {
         type: Map,
@@ -35,8 +40,11 @@ const Post =  mongoose.model("Post",PostSchema);
 function addPostValidation(obj){
     const schema = Joi.object({
         userId : Joi.required(),
-        description : Joi.string().required(),
-        picturePath :Joi.string().default(""),
+        description : Joi.string(),
+        postPicture : Joi.object({
+            data: Joi.binary(),
+            contentType: Joi.string().default(""),
+        }).optional().default(),
         likes: Joi.object().pattern(Joi.string(), Joi.boolean()).default({})
     });
     return schema.validate(obj);
@@ -46,7 +54,10 @@ function addPostValidation(obj){
 function updatePostValidation(obj){
     const schema = Joi.object({
         description : Joi.string(),
-        picturePath :Joi.string().default(""),
+        postPicture : Joi.object({
+            data: Joi.binary(),
+            contentType: Joi.string().default(""),
+        }).optional().default(),
     });
     return schema.validate(obj);
 }
