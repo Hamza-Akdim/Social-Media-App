@@ -24,10 +24,10 @@ const LastColumn = () => {
   ];
 
   return (
-    <div className="mt-2 py-1 bg-white border-3 border-gray2  rounded-mdd px-2.15 ml-3 sticky top-0">
+    <div className="mt-2 py-1 bg-white border-3 border-gray2 rounded-mdd px-2.15 ml-3 mr-1.5 sticky top-0">
       <div className="flex flex-row gap-3 items-center justify-between">
         <h2 className="text-183153 font-bold pb-1.5 pt-2">Messages</h2>
-        <img src="message.png"  width={30} height={30} />
+        <img src="message.png" width={30} height={30} />
       </div>
       {rec.map((item, index) => (
         <Messages

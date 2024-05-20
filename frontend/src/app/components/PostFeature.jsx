@@ -12,10 +12,12 @@ const PostFeature = () => {
   const handlePost = async () => {
     try {
       const formData = new FormData();
-      formData.append("picturePath", image);
       formData.append("description", description);
       formData.append("userId", userId);
-      
+      if (image) {
+        formData.append("postPicture", image);
+      }
+
       console.log("userId:", userId);
       console.log("token:", token);
       const response = await fetch("http://localhost:4001/api/posts/", {
@@ -38,7 +40,7 @@ const PostFeature = () => {
   return (
     <div className="border-3 border-gray2 max-h-4 mt-2 rounded-mdd bg-white mb-1">
       <div className="flex flex-row items-center p-2 border-b-2">
-        <img src="/gilfoyl.png"  alt="" className=" size-1 rounded-lg" />
+        <img src="/gilfoyl.png" alt="" className=" size-1 rounded-lg" />
         <input
           type="text"
           onChange={(e) => setDescription(e.target.value)}
@@ -67,16 +69,16 @@ const PostFeature = () => {
               id="image-upload"
               className="hidden"
             />
-            <img src="/Image.png" width={20} height={20}className="mr-0.7" />
+            <img src="/Image.png" width={20} height={20} className="mr-0.7" />
             <p>Image</p>
           </label>
         </div>
         <div className="flex flex-row mr-1.25">
-          <img src="/Video.png" width={20} height={20} className="mr-0.7"/>
+          <img src="/Video.png" width={20} height={20} className="mr-0.7" />
           <p>video</p>
         </div>
         <div className="flex flex-row">
-          <img src="/File.png" width={20} height={20} className="mr-0.7"/>
+          <img src="/File.png" width={20} height={20} className="mr-0.7" />
           <p>attachement</p>
         </div>
       </div>

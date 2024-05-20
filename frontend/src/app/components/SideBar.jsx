@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { IoMdMenu } from "react-icons/io";
 
@@ -7,12 +8,12 @@ const SideBar = () => {
       <div className="pl-1.5 border-b-2 w-full">
         <IoMdMenu size={35} />
       </div>
-      <div className="py-2 flex flex-col gap-0.5">.
+      <div className="py-2 flex flex-col gap-0.5">
         <div className="hover:bg-blueHover p-1 rounded-llg">
           <img src="/Home.png" alt="Menu" width={35} height={35} />
         </div>
         <div className="hover:bg-blueHover p-1 rounded-llg">
-          <img src="/Profile.png" alt="Menu" width={35} height={35} /> 
+          <img src="/Profile.png" alt="Menu" width={35} height={35} />
         </div>
         <div className="hover:bg-blueHover p-1 rounded-llg">
           <img src="/Notif.png" alt="Menu" width={35} height={35} />

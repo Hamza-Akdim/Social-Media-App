@@ -23,12 +23,12 @@ const SearchRow = () => {
     },
   ];
   return (
-    <div className="mr-1.5">
+    <div className="mr-1.5 ml-1.5">
       <div className="mt-1.5">
         <img src="/AtlasNet.png" alt="" className="w-4.25" />
       </div>
       <div className="flex align-items border-3 border-gray2 p-1.15 mt-1 h-10 bg-white rounded-mdd">
-        <img src="Search.png" size={25} className="mr-1 ml-0.5"/>
+        <img src="Search.png" size={25} className="mr-1 ml-0.5" />
         <input type="" className="w-4.25 px-1" placeholder="search ..." />
       </div>
       <div className="mt-0.7 py-1 border-3 border-gray2 bg-white rounded-mdd px-2.15">

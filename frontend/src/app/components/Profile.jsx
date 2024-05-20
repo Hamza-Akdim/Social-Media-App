@@ -11,8 +11,9 @@ const Profile = () => {
     logout();
     router.push("/signin");
   };
+
   return (
-    <div className="ml-3 mt-1 border-3 border-gray2 rounded-mdd sticky top-6 bg-white">
+    <div className="ml-3 mt-1 border-3 border-gray2 rounded-mdd sticky top-6 bg-white mr-1">
       <div className="bg-gray3 p-2 mx-1.25 mt-1.25 rounded-mdd">
         <div className="flex flex-row">
           <img src="/gilfoyl.png" alt="" className="w-1.25 rounded-lg" />
@@ -43,13 +44,16 @@ const Profile = () => {
         </div>
         <div className="flex justify-center mt-1">
           <button className="bg-[#538DD7] text-white w-95 font-bold py-1.15 px-2 h-1 rounded-mdd">
-              View My Profile
+            View My Profile
           </button>
         </div>
       </div>
-      <div className="flex justify-center"> 
-        <button className="flex my-1 hover:bg-blueHover p-1 pr-2 pl-2 rounded-llg" onClick={handleLogout}>
-          <img src="/Logout.png" width={25} height={25} className="mr-1"/>
+      <div className="flex justify-center">
+        <button
+          className="flex my-1 hover:bg-blueHover p-1 pr-2 pl-2 rounded-llg"
+          onClick={handleLogout}
+        >
+          <img src="/Logout.png" width={25} height={25} className="mr-1" />
           <p>Logout</p>
         </button>
       </div>

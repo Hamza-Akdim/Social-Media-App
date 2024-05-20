@@ -2,15 +2,20 @@ const express = require("express");
 const router = express.Router();
 const { verifyToken, authorization } = require("../middlewares/verifyToken.js");
 const upload = require("./uploadImages.js");
-const { addPost, deletePostByPostId, getFeedPosts, getUserPosts, likePost, updatePostByPostId } = require("../controllers/post-controller.js");
-
+const {
+  addPost,
+  deletePostByPostId,
+  getFeedPosts,
+  getUserPosts,
+  likePost,
+  updatePostByPostId,
+} = require("../controllers/post-controller.js");
 
 // /api/posts/
 router
   .route("/")
-  .post(upload.single("image"), verifyToken, authorization, addPost)
+  .post(upload.single("postPicture"), verifyToken, authorization, addPost)
   .get(getFeedPosts);
-
 
 // /api/posts/:userId
 router.route("/:userId").get(verifyToken, authorization, getUserPosts);

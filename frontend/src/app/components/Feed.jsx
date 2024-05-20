@@ -19,15 +19,15 @@ const Feed = () => {
 
   return (
     <div className="flex flex-col">
-      <PostFeature/>
-      <div className="overflow-y-auto">
+      <PostFeature />
+      <div className="">
         {posts.map((post) => (
           <Poste
             key={post._id}
             name={post.userId.lastName}
             caption={post.description}
             profilePic=""
-            src={post.picturePath}
+            src={post.postPicture}
             likes={Object.keys(post.likes).length}
             comments=""
             share=""

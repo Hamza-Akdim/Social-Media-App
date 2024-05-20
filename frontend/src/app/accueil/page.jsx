@@ -7,22 +7,31 @@ import Feed from "../components/Feed";
 import SearchColumn from "../components/SearchColumn";
 import LastColumn from "../components/LastColumn";
 
-const page = () => {
+const Page = () => {
   return (
-    <div className="bg-cover bg-center bg-scroll bg-gray3 h-screen flex flex-row fixed w-screen"  style={{backgroundImage: "url('zlijj.png')"}}>
-      <div className="w-3 " >
+    <div
+      className="bg-cover bg-center bg-gray3 h-screen flex"
+      style={{ backgroundImage: "url('zlijj.png')" }}
+    >
+      <div className="w-3 fixed top-0 h-screen">
         <SideBar />
       </div>
-      <div  >
-        <SearchColumn />
-      </div>
-      <Feed />
-      <div>
-        <LastColumn />
-        <Profile />
+      <div className="flex-1 ml-3 overflow-y-auto">
+        <div className="flex flex-row h-full">
+          <div className="w-1/4">
+            <SearchColumn />
+          </div>
+          <div className="w-1/2">
+            <Feed />
+          </div>
+          <div className="w-1/4 flex flex-col">
+            <LastColumn />
+            <Profile />
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;
