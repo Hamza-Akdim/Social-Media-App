@@ -58,7 +58,7 @@ const updateUserByID = asyncHandler( async (req,res) => {
           location : req.body.location,
           occupation : req.body.occupation,
       }
-  },{new : true}).select("-password")
+  },{new : true}).select("-password -backgroundPicture -profilePicture")
   res.status(200).json(updateUser);
   } 
 )
@@ -114,7 +114,7 @@ const updateUserBackgroundByID = asyncHandler( async (req,res) => {
  * @access  Private (only admin)
  */
 const getAllUsers = asyncHandler( async (req,res) => {
-  const users = await User.find().select("-password")
+  const users = await User.find().select("-password -backgroundPicture -profilePicture")
   res.status(200).json(users);
   }
 )
@@ -126,7 +126,7 @@ const getAllUsers = asyncHandler( async (req,res) => {
  * @access  Private (only admin & user himself)
  */
 const getUserByID = asyncHandler( async (req,res) => {
-  const user = await User.findById(req.params.id).select("-password").populate("friends",["_id" ,"firstName" ,"lastName","email"])
+  const user = await User.findById(req.params.id).select("-password -backgroundPicture -profilePicture").populate("friends",["_id" ,"firstName" ,"lastName","email"])
   if (user){
       res.status(200).json(user)
   } else (
@@ -141,7 +141,7 @@ const getUserByID = asyncHandler( async (req,res) => {
  * @access  Private (only admin & user himself)
  */
 const deleteUserByID = asyncHandler( async (req,res) => {
-  const user = await User.findById(req.params.id).select("-password")
+  const user = await User.findById(req.params.id).select("-password -backgroundPicture -profilePicture")
   if (user){
       await User.findByIdAndDelete(req.params.id)
       res.status(200).json({message:"User has been Deleted"})
@@ -157,7 +157,7 @@ const deleteUserByID = asyncHandler( async (req,res) => {
  * @access  Private (only admin & user himself)
  */
 const getUserFriendsByID = asyncHandler( async (req,res) => {
-  const user = await User.findById(req.params.id).select("-password").populate("friends",["_id" ,"email"])
+  const user = await User.findById(req.params.id).select("-password -backgroundPicture -profilePicture").populate("friends",["_id" ,"email"])
   if (user.friends){
       res.status(200).json(user.friends)
   } else (
