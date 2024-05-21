@@ -76,7 +76,7 @@ const login = asyncHandler(async (req, res) => {
   if (error) {
     return res.status(400).json(error.details[0].message);
   }
-  const user = await User.findOne({ email: req.body.email });
+  const user = await User.findOne({ email: req.body.email }) ;
   if (!user) {
     return res.status(400).json({ message: "invalid Email" });
   }
@@ -92,10 +92,10 @@ const login = asyncHandler(async (req, res) => {
   const token = jwt.sign({ _id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET_KEY);
   res.cookie("token", token, { expire: new Date(Date.now() + 8000000) });
 
-  const { _id, firstName, lastName, email} = user;
+  const {password, ...other} = user._doc
   return res.json({
     token: token,
-    user: { _id, firstName, lastName, email},
+    user : {...other},
   });
 });
 
