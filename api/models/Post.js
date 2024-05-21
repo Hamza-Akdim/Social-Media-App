@@ -28,6 +28,26 @@
             of: Boolean,
             default : {}
         },
+        comments: {
+            type: Map,
+            of: new mongoose.Schema({
+                userId: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'User',
+                    required: true
+                },
+                text: {
+                    type: String,
+                    required: true
+                },
+                createdAt: {
+                    type: Date,
+                    default: Date.now
+                }
+            }),
+            default: {},
+            required : false,
+        }
     },
     {
         timestamps : true,
