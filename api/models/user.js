@@ -37,11 +37,16 @@ const userSchema = new mongoose.Schema({
     trim : true ,
     minlength: 6 
   },
-  // picturePath: {
-  //   type: String,
-  //   default: "",
-  // },
   profilePicture: {
+    data: {
+      type : Buffer, // Binary data of the image
+    },
+    contentType: {
+      type : String,
+      default : "" ,
+    } // MIME type of the image (e.g., image/jpeg, image/png)
+  },
+  backgroundPicture: {
     data: {
       type : Buffer, // Binary data of the image
     },
@@ -56,7 +61,7 @@ const userSchema = new mongoose.Schema({
       ref : 'User',
     }],
     default : [],
-  } ,
+  },
   dateOfBirth : {
     type : String,
     required : true,
