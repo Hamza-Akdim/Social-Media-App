@@ -102,6 +102,10 @@ function validateRegisterUser(obj){
         data: Joi.binary(),
         contentType: Joi.string().default(""),
       }).optional().default(),
+      backgroundPicture : Joi.object({
+        data: Joi.binary(),
+        contentType: Joi.string().default(""),
+      }).optional().default(),
       friends : Joi.array().default([]),
       isAdmin: Joi.boolean().default(false),
       dateOfBirth : Joi.string().required(),
