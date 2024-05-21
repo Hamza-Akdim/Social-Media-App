@@ -12,13 +12,13 @@ router.get("/", verifyToken, authorization, isAdmin, getAllUsers);
 // /api/users/:id
 router
   .route("/:id")
+  .put(upload.single("profilePicture"), verifyToken, authorization, updateUserByID)
   .get(verifyToken, authorization, getUserByID)
   .delete(verifyToken, authorization, deleteUserByID);
 
-// /api/users/:id
+// /api/users/:id/backgroundPicture
 router
-  .route("/:id")
-  .put(upload.single("image"), verifyToken, authorization, updateUserByID)
+  .route("/:id/backgroundPicture")
   .put(upload.single("backgroundPicture"), verifyToken, authorization, updateUserBackgroundByID)
 
 // /api/users/:id/friends
