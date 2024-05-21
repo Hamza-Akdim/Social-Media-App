@@ -38,7 +38,7 @@ const PostFeature = () => {
     }
   };
   return (
-    <div className="border-3 border-gray2 max-h-4 mt-2 rounded-mdd bg-white mb-1">
+    <div className="border-3 border-gray2 max-h-4 mt-2 rounded-mdd bg-white mb-1 w-8.5">
       <div className="flex flex-row items-center p-2 border-b-2">
         <img src="/gilfoyl.png" alt="" className=" size-1 rounded-lg" />
         <input

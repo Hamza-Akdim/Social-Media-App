@@ -18,7 +18,7 @@ const {
 router
   .route("/")
   .post(upload.single("postPicture"), verifyToken, authorization, addPost)
-  .get(verifyToken, authorization, getFeedPosts);
+  .get(/*verifyToken, authorization,*/ getFeedPosts);
 
 // /api/posts/:userId
 router.route("/:userId").get(verifyToken, authorization, getUserPosts);
@@ -27,13 +27,15 @@ router.route("/:userId").get(verifyToken, authorization, getUserPosts);
 router.route("/:postId/:userId").patch(verifyToken, authorization, likePost);
 
 // /api/posts/:postId/:userId/comment
-router.route("/:postId/:userId/comment").post(verifyToken, authorization, commentPost);
+router
+  .route("/:postId/:userId/comment")
+  .post(verifyToken, authorization, commentPost);
 
 // /api/posts/:postId/:commentId
 router
   .route("/:postId/:commentId")
   .delete(verifyToken, authorization, deleteComment)
-  .put(verifyToken, authorization, updateComment)
+  .put(verifyToken, authorization, updateComment);
 
 // /api/posts/:postId
 router

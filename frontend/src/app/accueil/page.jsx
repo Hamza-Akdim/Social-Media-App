@@ -16,12 +16,12 @@ const Page = () => {
       <div className="w-3 fixed top-0 h-screen">
         <SideBar />
       </div>
-      <div className="flex-1 ml-3 overflow-y-auto">
+      <div className="flex-1 ml-3 overflow-y-auto ">
         <div className="flex flex-row h-full">
           <div className="w-1/4">
             <SearchColumn />
           </div>
-          <div className="w-1/2">
+          <div className="w-1/2 ml-3">
             <Feed />
           </div>
           <div className="w-1/4 flex flex-col">

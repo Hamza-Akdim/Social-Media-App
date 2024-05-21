@@ -7,7 +7,7 @@ const Poste = ({ name, caption, profilePic, src, likes }) => {
   };
   const imageSrc = src.data ? bufferToBase64(src.data) : "";
   return (
-    <div className="flex flex-col border-3 border-gray2 rounded-mdd bg-white mb-1.5">
+    <div className="flex flex-col border-3 border-gray2 rounded-mdd bg-white mb-1.5 w-8.5">
       <div className="flex flex-row pt-2 pl-2">
         <img src={profilePic} alt="" className="w-1.25 rounded-lg mr-1.25" />
         <h6 className="text-base font-semibold">{name}</h6>

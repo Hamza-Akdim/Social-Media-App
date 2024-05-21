@@ -13,7 +13,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="ml-3 mt-1 border-3 border-gray2 rounded-mdd sticky top-6 bg-white mr-1">
+    <div className="ml-2 mt-1 border-3 border-gray2 rounded-mdd sticky top-6 bg-white mr-1">
       <div className="bg-gray3 p-2 mx-1.25 mt-1.25 rounded-mdd">
         <div className="flex flex-row">
           <img src="/gilfoyl.png" alt="" className="w-1.25 rounded-lg" />
