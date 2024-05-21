@@ -38,8 +38,8 @@ app.use("/api/chat", chatRoute);
 
 
 // // Error handler middlewares
-// app.use(notFound);
-// app.use(errorHandler);
+app.use(notFound);
+app.use(errorHandler);
 
 // create server
 const PORT = process.env.PORT || 8000 ;
