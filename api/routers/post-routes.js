@@ -23,6 +23,9 @@ router
 // /api/posts/:userId
 router.route("/:userId").get(verifyToken, authorization, getUserPosts);
 
+// /api/posts/:postId/:userId
+router.route("/:postId/:userId").patch(verifyToken, authorization, likePost);
+
 // /api/posts/:postId/:userId/comment
 router.route("/:postId/:userId/comment").post(verifyToken, authorization, commentPost);
 
@@ -31,9 +34,6 @@ router
   .route("/:postId/:commentId")
   .delete(verifyToken, authorization, deleteComment)
   .put(verifyToken, authorization, updateComment)
-
-// /api/posts/:postId/:userId
-router.route("/:postId/:userId").patch(verifyToken, authorization, likePost);
 
 // /api/posts/:postId
 router
