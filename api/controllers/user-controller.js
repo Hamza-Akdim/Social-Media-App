@@ -64,6 +64,50 @@ const updateUserByID = asyncHandler( async (req,res) => {
 )
 
 /** 
+ * @desc    Update user's Background
+ * @route   /api/users/:id/backgroundPicture
+ * @method  PUT
+ * @access  Private
+ */
+const updateUserBackgroundByID = asyncHandler( async (req,res) => {
+  const user = await User.findById(req.params.id)
+  if (!user){
+    res.status(404).json({message : "user Not Found"})
+  }
+
+  const {error} = validateUpdateUser(req.body);
+  if (error){
+      res.status(400).json({message : error.details[0].message});
+  }
+
+  var Data = user.backgroundPicture.data
+  var ContentType = user.backgroundPicture.contentType
+  
+  if (req.file){
+    var Data, ContentType;
+    try {
+      Data = await fs.promises.readFile(req.file.path);
+      ContentType = req.file.mimetype;
+      req.file = req.file.path; 
+    } catch (err) {
+      console.error(err);
+      return res.status(500).send('Error reading Background image file');
+    }
+  }
+
+  const updateUser = await User.findByIdAndUpdate(req.params.id, {
+      $set : {
+          backgroundPicture : { 
+            data : Data, 
+            contentType : ContentType,
+          },
+      }
+  },{new : true}).select("-password -backgroundPicture -profilePicture")
+  res.status(200).json(updateUser);
+  } 
+)
+
+/** 
  * @desc    Get all Users
  * @route   /api/users
  * @method  GET
@@ -161,4 +205,5 @@ module.exports = {
   getUserFriendsByID,
   deleteUserByID,
   addRemoveFriend,
+  updateUserBackgroundByID
 }
