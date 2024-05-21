@@ -117,6 +117,93 @@ const likePost = asyncHandler( async (req,res) => {
 } )
 
 /** 
+ * @desc    comment post by its id
+ * @route   /api/posts/:postId/:userId/comment
+ * @method  POST
+ * @access  Private (only admin & user himself)
+ */
+const commentPost = asyncHandler( async (req,res) => {
+    const {postId,userId} = req.params;
+    
+    const comment = req.body.comment;
+    // Validate input
+    if (!comment) {
+        return res.status(400).json({ message: 'Comment text is required' });
+    }
+
+    // Find the post by ID
+    const post = await Post.findById(postId);
+    if (!post) {
+        return res.status(404).json({ message: 'Post not found' });
+    }
+    const commentId = new mongoose.Types.ObjectId();
+
+    const newComment = {
+        userId,
+        text : comment,
+        createdAt: new Date()
+    };
+    console.log(commentId, newComment);
+    post.comments.set(commentId, newComment)
+    await post.save();
+
+    res.status(201).json({ message: 'Comment added', comment: { id: commentId, ...newComment } });
+} )
+
+/** 
+ * @desc    Delete comment by its id
+ * @route   /api/posts/:postId/:commentId
+ * @method  DELETE
+ * @access  Private (only admin & user himself)
+ */
+const deleteComment = asyncHandler( async (req,res) => {
+    const {postId,commentId} = req.params;
+    // Find the post by ID
+    const post = await Post.findById(postId);
+    // Find the comment by ID
+    const comment = post.comments.get(commentId)
+    if (!post) {
+        return res.status(404).json({ message: 'post not found' });
+    }
+    if (comment){
+        await post.comments.delete(commentId)
+    } else {
+        return res.status(404).json({ message: 'comment not found' });
+    }
+    await post.save();
+    res.status(201).json({ message: 'Comment deleted'});
+})
+
+
+/** 
+ * @desc    Update comment by its id
+ * @route   /api/posts/:postId/:commentId
+ * @method  PUT
+ * @access  Private (only admin & user himself)
+ */
+const updateComment = asyncHandler( async (req,res) => {
+    const {postId, commentId} = req.params
+    const newComment = req.body.text
+    const post = await Post.findById(postId)
+    if (!post) {
+        return res.status(404).json({ message: 'Post not found' });
+    }
+    // Validate input
+    if (!newComment) {
+        return res.status(400).json({ message: 'Comment sould not be empty!' });
+    }
+    const oldComment = post.comments.get(commentId)
+    if (oldComment){
+        oldComment.text = newComment;
+        post.comments.set(commentId, oldComment);
+    } else {
+        return res.status(404).json({ message: 'comment not found' });
+    }
+    await post.save();
+    res.status(201).json({ message: 'Comment updated'});
+})
+
+/** 
  * @desc    Delete Post by postId
  * @route   /api/posts/:postId
  * @method  Delete
@@ -164,5 +251,8 @@ module.exports = {
     getUserPosts,
     likePost,
     deletePostByPostId,
-    updatePostByPostId
+    updatePostByPostId,
+    commentPost,
+    updateComment,
+    deleteComment
 }
