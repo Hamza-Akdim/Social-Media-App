@@ -131,6 +131,7 @@ module.exports = {
         5: "12rem",
         6: "17rem",
         7: "21rem",
+        8: "24rem",
       },
       borderRadius: {
         none: "0",

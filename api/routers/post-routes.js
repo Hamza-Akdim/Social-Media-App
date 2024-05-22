@@ -18,7 +18,7 @@ const {
 router
   .route("/")
   .post(upload.single("postPicture"), verifyToken, authorization, addPost)
-  .get(/*verifyToken, authorization,*/ getFeedPosts);
+  .get(verifyToken, authorization, getFeedPosts);
 
 // /api/posts/:userId
 router.route("/:userId").get(verifyToken, authorization, getUserPosts);
