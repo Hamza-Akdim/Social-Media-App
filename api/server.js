@@ -13,6 +13,7 @@ const userRoutes = require("./routers/user-routes.js");
 const authRoutes = require("./routers/authentication-routes.js");
 const postsRoutes = require("./routers/post-routes.js");
 const chatRoute = require("./routers/chat-routes")
+
 // connection to DB
 connectToDB();
 
