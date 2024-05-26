@@ -20,7 +20,6 @@ const page = () => {
         },
       });
       const data = await response.json();
-      console.log(data);
       if (response.ok) {
         login(data.user._id, data.token);
         router.push("/accueil");
@@ -34,7 +33,10 @@ const page = () => {
   };
 
   return (
-    <div className="relative bg-cover bg-center h-screen flex   "  style={{backgroundImage: "url('zlijj.png')"}}>
+    <div
+      className="relative bg-cover bg-center h-screen flex   "
+      style={{ backgroundImage: "url('zlijj.png')" }}
+    >
       <div className="flex justify-center items-center h-7 gap-3 bg-white border-gray2 border-3 w-xx ml-7 mt-4 rounded-llg shadow-lg">
         <div>
           <Image

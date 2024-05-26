@@ -9,13 +9,13 @@ const Feed = () => {
   const { userId } = useAuthContext();
   const { posts, fetchPosts } = usePostContext();
 
-  // useEffect(() => {
-  //   console.log(userId);
-  //   console.log(posts);
-  //   if (userId) {
-  //     fetchPosts(userId);
-  //   }
-  // }, [posts, userId]);
+  useEffect(() => {
+    console.log(userId);
+    console.log(posts);
+    if (userId) {
+      fetchPosts(userId);
+    }
+  }, [posts, userId]);
 
   return (
     <div className="flex flex-col">
